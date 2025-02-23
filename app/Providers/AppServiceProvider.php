@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Review;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -37,4 +38,5 @@ class AppServiceProvider extends ServiceProvider
             $view->with('recent_reviews',  Review::with('product','user')->whereStatus(true)->latest()->limit(5)->get());
         });
     }
+
 }

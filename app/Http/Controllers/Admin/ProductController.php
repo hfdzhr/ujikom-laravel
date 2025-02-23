@@ -21,10 +21,10 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         // abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $products = Product::with('category', 'tags','brands', 'firstMedia')->latest()->paginate(5); 
+        $products = Product::with('category', 'tags','brands', 'firstMedia')->latest()->paginate(5);
 
         return view('admin.products.index', compact('products'));
     }
@@ -54,9 +54,9 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         // abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-       
+
         if ($request->validated()){
-            $product = Product::create($request->e   xcept('tags','brands', 'images', '_token'));
+            $product = Product::create($request->except('tags','brands', 'images', '_token'));
             $product->tags()->attach($request->tags);
             $product->brands()->attach($request->brands);
 
@@ -98,7 +98,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         // abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+
         $categories = Category::latest()->get(['id', 'name']);
         $tags = Tag::latest()->get(['id', 'name']);
         $brands = Brand::latest()->get(['id', 'name']);
@@ -137,7 +137,7 @@ class ProductController extends Controller
         return back()->with([
             'message' => 'Something was wrong, please try again late',
             'alert-type' => 'danger'
-        ]);  
+        ]);
     }
 
     /**
@@ -168,7 +168,7 @@ class ProductController extends Controller
     public function removeImage(Request $request)
     {
         // abort_if(Gate::denies('product_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-       
+
         $product = Product::findOrFail($request->product_id);
         $image = $product->media()->whereId($request->image_id)->first();
 

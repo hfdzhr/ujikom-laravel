@@ -24,112 +24,124 @@
                 <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('put')
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="name">Nama</label>
-                                    <input class="form-control" id="name" type="text" name="name" value="{{ old('name', $product->name) }}">
-                                    @error('name')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="price">Harga</label>
-                                    <input class="form-control" id="price" type="number" name="price" value="{{ old('price', $product->price) }}">
-                                    @error('price')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="quantity">Kuantitas</label>
-                                    <input class="form-control" id="quantity" type="number" name="quantity" value="{{ old('quantity', $product->quantity) }}">
-                                    @error('quantity')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="name">Nama</label>
+                                <input class="form-control" id="name" type="text" name="name" value="{{ old('name', $product->name) }}">
+                                @error('name')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="category_id">Kategori</label>
-                                    <select name="category_id" id="category_id" class="form-control">
-                                        <option value="">- Select category -</option>
-                                        @forelse($categories as $category)
-                                            <option value="{{ $category->id }}" {{ old('category_id') || $product->category_id == $category->id ? 'selected' : null }}>
-                                                {{ $category->name }}
-                                            </option>
-                                        @empty
-                                        @endforelse
-                                    </select>
-                                    @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="tags">Tag</label>
-                                    <select name="tags[]" id="tags" class="form-control select2" multiple="multiple">
-                                        @forelse($tags as $tag)
-                                            <option value="{{ $tag->id }}" {{ in_array($tag->id, $product->tags->pluck('id')->toArray()) ? 'selected' : null }} >{{ $tag->name }}</option>
-                                        @empty
-                                        @endforelse
-                                    </select>
-                                    @error('tags')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="brands">Merk</label>
-                                    <select name="brands[]" id="brands" class="form-control select2" multiple="multiple">
-                                        @forelse($brands as $brand)
-                                            <option value="{{ $brand->id }}" {{ in_array($brand->id, $product->brands->pluck('id')->toArray()) ? 'selected' : null }} >{{ $brand->name }}</option>
-                                        @empty
-                                        @endforelse
-                                    </select>
-                                    @error('brands')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="price">Harga</label>
+                                <input class="form-control" id="price" type="number" name="price" value="{{ old('price', $product->price) }}">
+                                @error('price')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
                         </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="quantity">Kuantitas</label>
+                                <input class="form-control" id="quantity" type="number" name="quantity" value="{{ old('quantity', $product->quantity) }}">
+                                @error('quantity')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="category_id">Kategori</label>
+                                <select name="category_id" id="category_id" class="form-control">
+                                    <option value="">- Pilih Kategori -</option>
+                                    @forelse($categories as $category)
+                                        <option value="{{ $category->id }}" {{ old('category_id') || $product->category_id == $category->id ? 'selected' : null }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                                @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="tags">Tag</label>
+                                <select name="tags[]" id="tags" class="form-control select2" multiple="multiple" required>
+                                    @forelse($tags as $tag)
+                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                                @error('tags')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="brand_id">Merk</label>
+                                <select name="brand_id" id="brand_id" class="form-control">
+                                    <option value="">- Pilih Merk -</option>
+                                    @forelse($brands as $brand)
+                                        <option value="{{ $brand->id }}" {{ old('brand_id') || $product->brand_id == $brand->id ? 'selected' : null }}>
+                                            {{ $brand->name }}
+                                        </option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                                @error('brand_id')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="weight">Berat (gram)</label>
+                                <input type="number" name="weight" value="{{ old('weight') }}" class="form-control">
+                                @error('weight')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="">- Pilih Status-</option>
+                                    <option value="1" {{ old('status') == "1" ? 'selected' : null }}>Active</option>
+                                    <option value="0" {{ old('status') == "0" ? 'selected' : null }}>Inactive</option>
+                                </select>
+                                @error('status')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option value="">- Select Status-</option>
-                                        <option value="1" {{ old('status', $product->status) == "Active" ? 'selected' : null }}>Active</option>
-                                        <option value="0" {{ old('status', $product->status) == "Inactive" ? 'selected' : null }}>Inactive</option>
-                                    </select>
-                                    @error('status')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-                    </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                <label for="description" class="text-small text-uppercase">{{ __('Description') }}</label>
-                                <textarea name="description" rows="3" class="form-control summernote">{!! old('description', $product->description) !!}</textarea>
+                            <div class="form-group">
+                                <label for="description" class="text-small">{{ __('Deskripsi') }}</label>
+                                <textarea name="description" rows="3" class="form-control summernote">{!! old('description') !!}</textarea>
                                 @error('description')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                <label for="details" class="text-small text-uppercase">{{ __('details') }}</label>
-                                <textarea name="details" rows="3" class="form-control summernote">{!! old('details', $product->details) !!}</textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="details" class="text-small">{{ __('Detail') }}</label>
+                                <textarea name="details" rows="3" class="form-control summernote">{!! old('details') !!}</textarea>
                                 @error('details')<span class="text-danger">{{ $message }}</span>@enderror
-                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="images">{{ __('images') }}</label>
-                                <br>
-                                <div class="file-loading">
-                                    <input type="file" name="images[]" id="product-images" class="file-input-overview" multiple="multiple">
-                                </div>
-                                @error('images')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="images">{{ __('Foto') }}</label>
+                            <br>
+                            <div class="file-loading">
+                                <input type="file" name="images[]" id="product-images" class="file-input-overview" multiple="multiple">
                             </div>
+                            @error('images')<span class="text-danger">{{ $message }}</span>@enderror
                         </div>
-                        <div class="form-group pt-4">
-                            <button class="btn btn-primary" type="submit" name="submit">{{ __('Save') }}</button>
-                        </div>
+                    </div>
+                    <div class="form-group pt-4">
+                        <button class="btn btn-primary" type="submit" name="submit">{{ __('Simpan') }}</button>
+                    </div>
                     </form>
             </div>
         </div>

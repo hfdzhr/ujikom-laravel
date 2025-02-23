@@ -16,10 +16,10 @@ class TagController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         // abort_if(Gate::denies('tag_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tags = Tag::withCount('products')->latest()->paginate(5); 
+        $tags = Tag::withCount('products')->latest()->paginate(5);
 
         return view('admin.tags.index', compact('tags'));
     }
@@ -95,7 +95,7 @@ class TagController extends Controller
         return redirect()->route('admin.tags.index')->with([
             'message' => 'success updated !',
             'alert-type' => 'info'
-        ]);    
+        ]);
     }
 
     /**

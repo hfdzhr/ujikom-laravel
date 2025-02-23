@@ -21,11 +21,11 @@
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th>Gambar</th>
+                        <th>Foto</th>
                         <th>Nama</th>
                         <th>Kuantitas</th>
                         <th>Harga</th>
-                        <th>Beratt</th>
+                        <th>Berat</th>
                         <th>Tag</th>
                         <th>Merk</th>
                         <th>Kategori</th>
@@ -73,7 +73,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td class="text-center" colspan="12">No products found.</td>
+                            <td class="text-center" colspan="12">Tidak ada produk.</td>
                         </tr>
                     @endforelse
                     </tbody>

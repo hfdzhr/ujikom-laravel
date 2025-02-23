@@ -31,7 +31,7 @@ Route::get('shop/{slug?}', [\App\Http\Controllers\ShopController::class, 'index'
 Route::get('shop/tag/{slug}', [\App\Http\Controllers\ShopController::class, 'tag'])->name('shop.tag');
 Route::get('shop/brand/{slug}', [\App\Http\Controllers\ShopController::class, 'brand'])->name('shop.brand');
 Route::get('product/{slug}', [\App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
-Route::get('/recommendations/{product_id}', [RecommendationController::class, 'recommendProductsForUser']);
+// Route::get('/recommendations/{product_id}', [RecommendationController::class, 'recommendProductsForUser']);
 
 Route::resource('favorite', \App\Http\Controllers\FavoriteController::class)->only(['index','store','destroy']);
 Route::resource('cart', \App\Http\Controllers\CartController::class)->only(['index','store','update', 'destroy']);
@@ -55,8 +55,11 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('permissions', \App\Http\Controllers\Admin\PermissionController::class);
         Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
-    
+
         Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+        Route::prefix('categories')->name('categories.')->group(function() {
+            Route::post('datatable', [\App\Http\Controllers\Admin\CategoryController::class, 'datatable'])->name('datatable');
+        });
         Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
         Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class);
         Route::post('/products/remove-image', [\App\Http\Controllers\Admin\ProductController::class, 'removeImage'])->name('products.removeImage');
